@@ -54,7 +54,7 @@ scikit-image==0.19.3
 scikit-learn==1.0.2
 scipy==1.7.3
 six==1.16.0
-sklearn==0.0.post5
+
 soupsieve==2.4.1
 tb-nightly==2.12.0a20230113
 tensorboard==1.13.1
