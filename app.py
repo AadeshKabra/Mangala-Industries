@@ -386,7 +386,7 @@ def download():
 
     output.seek(0)
     file_path = os.path.join(os.path.expanduser("~"), "Downloads", "Reports.xlsx")
-    response = send_file(output, as_attachment=True, attachment_filename=file_path,mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response = send_file(output, as_attachment=True, download_name=file_path,mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     response.headers['Content-Disposition'] = 'attachment; filename=Reports.xlsx'
     response.headers['Cache-Control'] = 'no-cache'
