@@ -261,8 +261,11 @@ def new_insert():
             print("Error in updating quantity")
 
     print("Inserted")
-
-    return render_template("Inserts/inserts.html")
+    df = get_current_report()
+    report = df.to_html()
+    report = report.replace('<th>', '<th style="font-weight:bold;">')
+    report = report.replace('</table>', '<style>table tr td:last-child {font-weight: bold;}</style></table>')
+    return render_template("Inserts/inserts.html", report=report)
 
 
 @app.route('/get_max_quantity', methods=['POST'])
@@ -336,7 +339,11 @@ def out_insert():
 
     print("Removed")
 
-    return render_template("Inserts/inserts.html")
+    df = get_current_report()
+    report = df.to_html()
+    report = report.replace('<th>', '<th style="font-weight:bold;">')
+    report = report.replace('</table>', '<style>table tr td:last-child {font-weight: bold;}</style></table>')
+    return render_template("Inserts/inserts.html", report=report)
 
 
 @app.route("/inwardReport", methods=['POST'])
@@ -406,7 +413,12 @@ def add_operator():
         "Name": name
     }
     operators.insert_one(doc)
-    return render_template("Inserts/inserts.html")
+    df = get_current_report()
+    report = df.to_html()
+    report = report.replace('<th>', '<th style="font-weight:bold;">')
+    report = report.replace('</table>', '<style>table tr td:last-child {font-weight: bold;}</style></table>')
+    return render_template("Inserts/inserts.html", report=report)
+
 
 
 @app.route("/get_operators", methods=['GET'])
