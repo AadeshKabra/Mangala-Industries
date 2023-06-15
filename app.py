@@ -236,6 +236,7 @@ def new_insert():
     for i in date:
         date_string += i
         date_string += "-"
+    date_string = date_string[:len(date_string)-1]
 
     document = {
         "Name": name,
@@ -306,7 +307,7 @@ def out_insert():
     for i in date:
         date_string += i
         date_string += "-"
-
+    date_string = date_string[:len(date_string)-1]
     existing_doc = inserts.find_one({"Name": item, "Brand": brand})
 
     if existing_doc:
