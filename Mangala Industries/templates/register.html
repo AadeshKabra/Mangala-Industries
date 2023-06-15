@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-image: url('../static/viktor-forgacs-aPC8ygu3bWA-unsplash.jpg');
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 40px;
+            font-family: 'Archivo Black', sans-serif;
+            color: #213555;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        input {
+            font-size: 28px;
+        }
+
+        input:hover {
+            border-radius: 5px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            margin-top: 3em;
+        }
+
+        .form-group label {
+            margin-right: 2em;
+            width: 120px;
+            text-align: right;
+            font-size: 28px;
+            font-family: 'Fira Sans Condensed', sans-serif;
+            color: #213555;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            flex: 1;
+            width: 100%;
+        }
+
+        button {
+            font-size: 30px;
+            padding: 5px;
+            background-color: #213555;
+            font-family: 'Fira Sans Condensed', sans-serif;
+            color: #ECF8F9;
+            width: 300px;
+            border-radius: 10px;
+        }
+
+        button:hover {
+            background-color: #a2b0c8;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            color: #152641;
+            cursor: pointer;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Register</h1>
+    <form action="/register" method="post">
+        <div class="form-group">
+            <label for="username" style="display: inline-block;">Username:</label>
+            <input type="text" id="username" name="username">
+        </div>
+
+        <br>
+        <div class="form-group">
+            <label for="password" style="display: inline-block;">Password:</label>
+            <input type="password" id="password" name="password">
+        </div>
+
+        <br>
+        <div class="form-group">
+            <button type="submit" class="button-40" role="button">Register</button>
+        </div>
+    </form>
+
+    <form action="/" method="get">
+        <button type="submit" class="button-40" role="button">Login</button>
+    </form>
+</body>
+
+</html>
