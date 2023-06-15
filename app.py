@@ -1,7 +1,5 @@
 import pymongo
 from flask import Flask, render_template, request, session, jsonify, send_file
-from pymongo import MongoClient
-from flask_pymongo import PyMongo
 import pandas as pd
 import io
 import os
