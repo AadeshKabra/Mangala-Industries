@@ -95,15 +95,24 @@ def get_inward_reports():
     # Report2
     seen = set()
     inserts_list_new = [x for x in inserts_list if not (x in seen or seen.add(x))]
-    total_qty = []
+    total_inward = []
+    total_outward = []
+    total_balance = []
     for item in inserts_list_new:
-        docs = insertsI.find({'Name': item})
-        sum = 0
-        for doc in docs:
-            sum += doc['Quantity']
-        total_qty.append(sum)
-
-    df2 = pd.DataFrame(list(zip(inserts_list_new, total_qty)), columns=['Insert', 'Total Purchase'])
+        docsI = insertsI.find({'Name': item})
+        docsO = insertsO.find({'Name': item})
+        docsB = inserts.find({'Name': item})
+        sumI, sumO, sumB = 0, 0, 0
+        for doc in docsI:
+            sumI += doc['Quantity']
+        total_inward.append(sumI)
+        for doc in docsO:
+            sumO += int(doc['Quantity'])
+        total_outward.append(sumO)
+        for doc in docsB:
+            sumB += int(doc['Quantity'])
+        total_balance.append(sumB)
+    df2 = pd.DataFrame(list(zip(inserts_list_new, total_inward, total_outward, total_balance)), columns=['Insert', 'Total Purchase', 'Total Outward', 'Balance Stock'])
     df2.reset_index(inplace=True, drop=True)
     df2.index += 1
 
@@ -131,18 +140,26 @@ def get_outward_reports():
     df1.index += 1
 
     # Report2
-
     seen = set()
     inserts_list_new = [x for x in inserts_list if not (x in seen or seen.add(x))]
-    total_qty = []
+    total_inward = []
+    total_outward = []
+    total_balance = []
     for item in inserts_list_new:
-        docs = insertsO.find({'Name': item})
-        sum = 0
-        for doc in docs:
-            sum += int(doc['Quantity'])
-        total_qty.append(sum)
-
-    df2 = pd.DataFrame(list(zip(inserts_list_new, total_qty)), columns=['Insert', 'Total Outward'])
+        docsI = insertsI.find({'Name': item})
+        docsO = insertsO.find({'Name': item})
+        docsB = inserts.find({'Name': item})
+        sumI, sumO, sumB = 0, 0, 0
+        for doc in docsI:
+            sumI += doc['Quantity']
+        total_inward.append(sumI)
+        for doc in docsO:
+            sumO += int(doc['Quantity'])
+        total_outward.append(sumO)
+        for doc in docsB:
+            sumB += int(doc['Quantity'])
+        total_balance.append(sumB)
+    df2 = pd.DataFrame(list(zip(inserts_list_new, total_inward, total_outward, total_balance)), columns=['Insert', 'Total Purchase', 'Total Outward', 'Balance Stock'])
     df2.reset_index(inplace=True, drop=True)
     df2.index += 1
 
@@ -203,11 +220,7 @@ def login():
 # Inserts Section
 @app.route("/inserts", methods=['POST'])
 def inserts_section():
-    df = get_current_report()
-    report = df.to_html()
-    report = report.replace('<th>', '<th style="font-weight:bold;">')
-    report = report.replace('</table>', '<style>table tr td:last-child {font-weight: bold;}</style></table>')
-    return render_template("Inserts/inserts.html", report=report)
+    return render_template("Inserts/inserts.html")
 
 
 @app.route("/insertsInward", methods=['POST'])
@@ -262,11 +275,7 @@ def new_insert():
             print("Error in updating quantity")
 
     print("Inserted")
-    df = get_current_report()
-    report = df.to_html()
-    report = report.replace('<th>', '<th style="font-weight:bold;">')
-    report = report.replace('</table>', '<style>table tr td:last-child {font-weight: bold;}</style></table>')
-    return render_template("Inserts/inserts.html", report=report)
+    return render_template("Inserts/inserts.html")
 
 
 @app.route('/get_max_quantity', methods=['POST'])
@@ -339,12 +348,7 @@ def out_insert():
     insertsO.insert_one(doc)
 
     print("Removed")
-
-    df = get_current_report()
-    report = df.to_html()
-    report = report.replace('<th>', '<th style="font-weight:bold;">')
-    report = report.replace('</table>', '<style>table tr td:last-child {font-weight: bold;}</style></table>')
-    return render_template("Inserts/inserts.html", report=report)
+    return render_template("Inserts/inserts.html")
 
 
 @app.route("/inwardReport", methods=['POST'])
@@ -414,11 +418,7 @@ def add_operator():
         "Name": name
     }
     operators.insert_one(doc)
-    df = get_current_report()
-    report = df.to_html()
-    report = report.replace('<th>', '<th style="font-weight:bold;">')
-    report = report.replace('</table>', '<style>table tr td:last-child {font-weight: bold;}</style></table>')
-    return render_template("Inserts/inserts.html", report=report)
+    return render_template("Inserts/inserts.html")
 
 
 
