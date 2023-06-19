@@ -5,8 +5,63 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inserts</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-image: url('../static/background1.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 40px;
+            font-family: 'Archivo Black', sans-serif;
+            color: #213555;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            margin-left: 6em;
+        }
+
+        th,
+        td {
+            border: 4px solid black;
+            padding: 8px;
+            text-align: left;
+            background-color: white;
+        }
+
+        th {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .report{
+            display: flex;
+            float: left;  
+        }
+    </style>
 </head>
 <body>
     <h1>Stock report</h1>
+    <div class="report">
+        <div class="data">
+            {{ report|safe }}
+        </div>
+    </div>
 </body>
 </html>

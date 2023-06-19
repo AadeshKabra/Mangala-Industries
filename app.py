@@ -406,6 +406,38 @@ def download():
     return response
 
 
+@app.route("/balanceReport")
+def balance_report():
+    seen = set()
+    inserts_list_new = [x for x in inserts_list if not (x in seen or seen.add(x))]
+    total_inward = []
+    total_outward = []
+    total_balance = []
+    for item in inserts_list_new:
+        docsI = insertsI.find({'Name': item})
+        docsO = insertsO.find({'Name': item})
+        docsB = inserts.find({'Name': item})
+        sumI, sumO, sumB = 0, 0, 0
+        for doc in docsI:
+            sumI += doc['Quantity']
+        total_inward.append(sumI)
+        for doc in docsO:
+            sumO += int(doc['Quantity'])
+        total_outward.append(sumO)
+        for doc in docsB:
+            sumB += int(doc['Quantity'])
+        total_balance.append(sumB)
+    df = pd.DataFrame(list(zip(inserts_list_new, total_inward, total_outward, total_balance)), columns=['Insert', 'Total Purchase', 'Total Outward', 'Balance Stock'])
+    df.reset_index(inplace=True, drop=True)
+    df.index += 1
+
+    report2 = df.to_html()
+    report2 = report2.replace('<th>', '<th style="font-weight:bold;">')
+    report2 = report2.replace('</table>', '<style>table tr td:last-child {font-weight: bold;}</style></table>')
+
+    return render_template("stockReport.html", report=report2)
+
+
 @app.route("/operators", methods=['POST'])
 def operator():
     return render_template("Operators/operators.html")
